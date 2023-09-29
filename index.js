@@ -1,6 +1,6 @@
 const inquirer = require('inquirer');
-const fs =require('fs');
-// const chalk = require('chalk');
+const fs = require('fs');
+
 
 function createSvgLogo(userInput) {
     return `<svg width="100" height="100">
@@ -53,13 +53,30 @@ async function getUserInput () {
  
      // You can access the user's choices using answers.shapeColor and answers.textColor, and they will be in hexadecimal format.
      console.log('User input:', answers);
+     return answers;
 
 
 }
 
-getUserInput();
+
+
+async function main() {
+    const userInput = await getUserInput();
+    const mySVGLogo = createSvgLogo(userInput);
+    console.log(mySVGLogo);
+}
+
+main();
 
 
 
-const mySVGLogo = createSvgLogo();
-console.log(mySVGLogo);
+
+
+
+
+
+
+
+
+
+

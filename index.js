@@ -2,12 +2,45 @@ const inquirer = require('inquirer');
 const fs = require('fs');
 
 
+// function createSvgLogo(userInput) {
+//     return `<svg width="100" height="100">
+//     <rect width="100" height="100" fill="${userInput.shapeColor}" />
+//     <text x="10" y="50" fill="${userInput.textColor}">${userInput.text}</text>
+// </svg>`;
+// }
+
 function createSvgLogo(userInput) {
-    return `<svg width="100" height="100">
-    <rect width="100" height="100" fill="${userInput.shapeColor}" />
-    <text x="10" y="50" fill="${userInput.textColor}">${userInput.text}</text>
-</svg>`;
+    return `<svg version="1.1"
+    width="300" height="200"
+    xmlns="http://www.w3.org/2000/svg">
+
+ <rect width="100%" height="100%" fill="${userInput.shapeColor}" />
+
+ <circle cx="150" cy="100" r="80" fill="${userInput.shapeColor}" />
+
+ <polygon points="150,20 190,160 110,160" fill="${userInput.shapeColor}" />
+
+ <text x="150" y="150" font-size="60" text-anchor="middle" fill="${userInput.textColor}">${userInput.text}</text>
+
+</svg>`
+
 }
+
+class Square {
+    constructor(text, shapeColor, textColor) {
+        this.text = text;
+        this.shapeColor = shapeColor;
+        this.textColor = textColor;
+    }
+
+ render() {
+    return `<svg width="100" height="100">
+    <rect width="100" height="100" fill="${this.shapeColor}" />
+    <text x="10" y="50" fill="${this.textColor}">${this.text}</text>
+</svg>`;
+ }
+}
+
 
 const customColors = [
     { name: 'Red', value: '#FF0000'},
@@ -53,17 +86,26 @@ async function getUserInput () {
  
      // You can access the user's choices using answers.shapeColor and answers.textColor, and they will be in hexadecimal format.
      console.log('User input:', answers);
+     let shape;
+     shape = new Square(answers.text, answers.shapeColor, answers.textColor)
+     if(answers.choices !== Square) {
+        
+     }
+     console.log(shape) // if statement, reassign shape
+    const logo = shape.render();
+    console.log(logo);
+    fs.writeFile('shape.svg', logo, (err) =>
+    err ? console.log(err) : console.log('Successfully created shape.svg!')
+    );
      return answers;
 
 
 }
 
-
-
 async function main() {
     const userInput = await getUserInput();
     const mySVGLogo = createSvgLogo(userInput);
-    console.log(mySVGLogo);
+    // console.log(mySVGLogo);
 }
 
 main();

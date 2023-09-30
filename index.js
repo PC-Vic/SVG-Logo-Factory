@@ -2,13 +2,6 @@ const inquirer = require('inquirer');
 const fs = require('fs');
 
 
-// function createSvgLogo(userInput) {
-//     return `<svg width="100" height="100">
-//     <rect width="100" height="100" fill="${userInput.shapeColor}" />
-//     <text x="10" y="50" fill="${userInput.textColor}">${userInput.text}</text>
-// </svg>`;
-// }
-
 function createSvgLogo(userInput) {
     return `<svg version="1.1"
     width="300" height="200"
@@ -33,7 +26,7 @@ class Square {
         this.textColor = textColor;
     }
 
- render() {
+ renderSquare() {
     return `<svg width="100" height="100">
     <rect width="100" height="100" fill="${this.shapeColor}" />
     <text x="10" y="50" fill="${this.textColor}">${this.text}</text>
@@ -41,6 +34,36 @@ class Square {
  }
 }
 
+ class Circle {
+    constructor(text, shapeColor, textColor) {
+        this.text = text;
+        this.shapeColor = shapeColor;
+        this.textColor = textColor;
+    }
+
+
+ renderCircle() {
+    return `<svg width="100" height="100">
+        <circle cx="50" cy="50" r="40" fill="${this.shapeColor}" />
+        <text x="10" y="50" fill="${this.textColor}">${this.text}</text>
+    </svg>`;
+  }
+ }
+
+class Triangle {
+    constructor(text, shapeColor, textColor) {
+        this.text = text;
+        this.shapeColor = shapeColor;
+        this.textColor = textColor;
+    }
+
+renderTriangle() {
+    return `<svg width="100" height="100">
+        <polygon points="50,10 90,90 10,90" fill="${this.shapeColor}" />
+        <text x="10" y="50" fill="${this.textColor}">${this.text}</text>
+    </svg>`;
+ }
+}
 
 const customColors = [
     { name: 'Red', value: '#FF0000'},
@@ -85,19 +108,39 @@ async function getUserInput () {
      answers.textColor = customColors.find(choice => choice.name === answers.textColor).value;
  
      // You can access the user's choices using answers.shapeColor and answers.textColor, and they will be in hexadecimal format.
-     console.log('User input:', answers);
+    //  console.log('User input:', answers);
      let shape;
-     shape = new Square(answers.text, answers.shapeColor, answers.textColor)
-     if(answers.choices !== Square) {
-        
-     }
-     console.log(shape) // if statement, reassign shape
-    const logo = shape.render();
+
+     if (answers.shape === 'Square') {
+        shape = new Square(answers.text, answers.shapeColor, answers.textColor);
+    } else if (answers.shape === 'Circle') {
+        shape = new Circle(answers.text, answers.shapeColor, answers.textColor);
+    } else if (answers.shape === 'Triangle') {
+        shape = new Triangle(answers.text, answers.shapeColor, answers.textColor);
+    } else {
+        // Handle an unknown or unsupported shape here
+        console.log('Unsupported shape:', answers.shape);
+        return;
+    }
+    
+    console.log(shape);
+    let logo;
+    
+    if (answers.shape === 'Square') {
+        logo = shape.renderSquare();
+    } else if (answers.shape === 'Circle') {
+        logo = shape.renderCircle();
+    } else if (answers.shape === 'Triangle') {
+        logo = shape.renderTriangle();
+    }
+   
     console.log(logo);
+    
     fs.writeFile('shape.svg', logo, (err) =>
-    err ? console.log(err) : console.log('Successfully created shape.svg!')
+        err ? console.log(err) : console.log('Successfully created shape.svg!')
     );
-     return answers;
+    
+    return answers;
 
 
 }

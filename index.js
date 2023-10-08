@@ -15,9 +15,7 @@ function createSvgLogo(userInput) {
  <polygon points="150,20 190,160 110,160" fill="${userInput.shapeColor}" />
 
  <text x="150" y="150" font-size="60" text-anchor="middle" fill="${userInput.textColor}">${userInput.text}</text>
-
 </svg>`
-
 }
 
 
@@ -63,8 +61,6 @@ async function getUserInput () {
      answers.shapeColor = customColors.find(choice => choice.name === answers.shapeColor).value;
      answers.textColor = customColors.find(choice => choice.name === answers.textColor).value;
  
-     // You can access the user's choices using answers.shapeColor and answers.textColor, and they will be in hexadecimal format.
-    //  console.log('User input:', answers);
      let shape;
 
      if (answers.shape === 'Square') {
@@ -109,7 +105,7 @@ async function main() {
 main();
 
 
-
+module.exports = getUserInput;
 
 
 

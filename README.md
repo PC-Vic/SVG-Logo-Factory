@@ -15,6 +15,7 @@ SVG Logo Factory is a JavaScript-based tool that allows you to generate custom S
 2. Navigate to the project directory.
 3. Run the following command to start the SVG Logo Factory: node index.js
 4. Follow the prompts to customize your SVG logo.
+- Here is a link to my walkthrough video: (https://drive.google.com/file/d/1S9EMob_L-ioQlkP5u2HUw-hoSTJa8wK1/view)
 
 ## Dependencies
 
